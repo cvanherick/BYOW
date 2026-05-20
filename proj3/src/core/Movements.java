@@ -1,11 +1,8 @@
 package core;
 
-import edu.princeton.cs.algs4.StdDraw;
 import tileengine.Tileset;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Movements {
     World world;

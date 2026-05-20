@@ -1,7 +1,6 @@
 package core;
 
 import tileengine.TERenderer;
-import tileengine.TETile;
 
 public class LineOfSight {
     TERenderer ter;

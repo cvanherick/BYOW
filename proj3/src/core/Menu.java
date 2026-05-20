@@ -3,11 +3,6 @@ package core;
 import edu.princeton.cs.algs4.StdDraw;
 import tileengine.TERenderer;
 import tileengine.TETile;
-import tileengine.Tileset;
-
-import static java.awt.image.ImageObserver.HEIGHT;
-import static java.awt.image.ImageObserver.WIDTH;
-import static org.eclipse.jetty.webapp.MetaDataComplete.True;
 
 public class Menu {
     private static final int WIDTH = 90;

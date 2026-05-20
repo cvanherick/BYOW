@@ -51,7 +51,7 @@ public class Enemy {
             for (int[] move: DIRECTIONS) {
                 int newX = currNode.x + move[0];
                 int newY = currNode.y + move[1];
-                if (!visited[newX][newY] && world.gameState[newX][newY] != World.wall
+                if (inBounds(newX, newY) && !visited[newX][newY] && world.gameState[newX][newY] != World.wall
                         && world.gameState[newX][newY] != Tileset.ENEMY) {
                     visited[newX][newY] = true;
                     queue.add(new Node(newX, newY, currNode));
@@ -59,5 +59,9 @@ public class Enemy {
             }
         }
         return null;
+    }
+
+    private boolean inBounds(int x, int y) {
+        return x >= 0 && x < world.WIDTH && y >= 0 && y < world.HEIGHT;
     }
 }

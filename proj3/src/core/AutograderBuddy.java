@@ -18,10 +18,63 @@ public class AutograderBuddy {
      * @return the 2D TETile[][] representing the state of the world
      */
     public static TETile[][] getWorldFromInput(String input) {
+        if (input == null || input.isEmpty()) {
+            return new World().gameState;
+        }
 
-        // Optional: Complete this method if you are submitting to the autograder
+        String normalized = input.toLowerCase();
+        World world;
+        int index;
 
-        throw new RuntimeException("Please fill out AutograderBuddy!");
+        if (normalized.charAt(0) == 'n') {
+            int seedEnd = normalized.indexOf('s', 1);
+            if (seedEnd < 0) {
+                throw new IllegalArgumentException("New game input must include a seed followed by S.");
+            }
+            long seed = Long.parseLong(normalized.substring(1, seedEnd));
+            world = new World(seed);
+            index = seedEnd + 1;
+        } else if (normalized.charAt(0) == 'l') {
+            world = SaveLoadGame.loadGame();
+            if (world == null) {
+                return new World().gameState;
+            }
+            index = 1;
+        } else {
+            throw new IllegalArgumentException("Input must start with N for new game or L for load.");
+        }
+
+        Movements movements = new Movements(world);
+        boolean colonTyped = false;
+        while (index < normalized.length()) {
+            char command = normalized.charAt(index);
+            if (colonTyped && command == 'q') {
+                SaveLoadGame.writeSaveFile(world);
+                return world.gameState;
+            }
+
+            if (command == ':') {
+                colonTyped = true;
+            } else {
+                colonTyped = false;
+                applyMovement(world, movements, command);
+            }
+            index += 1;
+        }
+
+        return world.gameState;
+    }
+
+    private static void applyMovement(World world, Movements movements, char command) {
+        if (command == 'w') {
+            movements.move(World.avatarX, World.avatarY, World.avatarX, World.avatarY + 1);
+        } else if (command == 's') {
+            movements.move(World.avatarX, World.avatarY, World.avatarX, World.avatarY - 1);
+        } else if (command == 'a') {
+            movements.move(World.avatarX, World.avatarY, World.avatarX - 1, World.avatarY);
+        } else if (command == 'd') {
+            movements.move(World.avatarX, World.avatarY, World.avatarX + 1, World.avatarY);
+        }
     }
 
 

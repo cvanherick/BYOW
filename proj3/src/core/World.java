@@ -137,7 +137,7 @@ public class World {
                 //xPosition = result[0];
                 //yPosition = result[1];
                 if (roomCenters.size() > 1) {
-                    int[] newRoomCenter = roomCenters.getLast();
+                    int[] newRoomCenter = roomCenters.get(roomCenters.size() - 1);
                     int[] prevRoomCenter = roomCenters.get(roomCenters.size() - 2);
                     connectRooms(prevRoomCenter, newRoomCenter);
                 }
@@ -175,7 +175,7 @@ public class World {
         if (floors.containsKey(x)) {
             floors.get(x).add(y);
         } else {
-            List<Integer > yFloors = new ArrayList<>();
+            List<Integer> yFloors = new ArrayList<>();
             yFloors.add(y);
             floors.put(x, yFloors);
         }

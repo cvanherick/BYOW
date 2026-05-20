@@ -1,8 +1,5 @@
 package core;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import edu.princeton.cs.algs4.In;
 import tileengine.Tileset;
 
@@ -16,6 +13,11 @@ public class SaveLoadGame {
 
 
     public static void saveGame(World world) {
+        writeSaveFile(world);
+        System.exit(0);
+    }
+
+    static void writeSaveFile(World world) {
         StringBuilder returnContent = new StringBuilder();
         returnContent.append(world.seed).append("\n");
         returnContent.append(World.avatarX).append(" ").append(World.avatarY);
@@ -23,10 +25,12 @@ public class SaveLoadGame {
             returnContent.append("\n").append(enemy.currX).append(" ").append(enemy.currY);
         }
         writeFile("savedGamed.txt", returnContent.toString());
-        System.exit(0);
     }
 
     public static World loadGame() {
+        if (!fileExists("savedGamed.txt")) {
+            return null;
+        }
         In file = new In("savedGamed.txt");
         if (file.isEmpty()) {
             return null;
